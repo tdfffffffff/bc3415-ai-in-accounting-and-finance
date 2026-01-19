@@ -5,10 +5,12 @@ from flask import Flask, render_template, request
 
 # Create a Flask application instance
 # __name__ helps Flask locate files like templates and static assets
+
 app = Flask(__name__)
 
 # Define a route for the homepage "/"
 # This route accepts both GET (page load) and POST (form submission) requests
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     # When a user visits "/", Flask executes this function
@@ -16,8 +18,17 @@ def index():
     # and returns it as the HTTP response
     return render_template("index.html")
 
+@app.route("/main", methods=["GET", "POST"])
+def main():
+    return render_template("main.html")
+
 # This block ensures the app runs only when this file is executed directly
 # (and not when imported into another file)
+
+@app.route("/dbs", methods=["GET", "POST"])
+def dbs():
+    return render_template("dbs.html")
+
 if __name__ == "__main__":
     # Start Flask's built-in development server
     # The app will be accessible at http://127.0.0.1:5000/
