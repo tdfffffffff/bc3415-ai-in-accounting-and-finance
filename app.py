@@ -2,6 +2,9 @@
 # Import render_template to display HTML pages
 # Import request to handle user input (eg. form data)
 from flask import Flask, render_template, request
+import joblib
+
+model = joblib.load('DBS_SGD_model.pkl')
 
 # Create a Flask application instance
 # __name__ helps Flask locate files like templates and static assets
@@ -27,9 +30,18 @@ def main():
 
 @app.route("/dbs", methods=["GET", "POST"])
 def dbs():
-    return render_template("dbs.html")
+        return(render_template('dbs.html'))
+
+@app.route("/dbsPrediction", methods=["GET", "POST"])
+def dbsPrediction():
+    q = float(request.form.get("q"))
+    r = model.predict([[q]])
+    r = r[0][0]
+    return render_template("dbsPrediction.html", r = r)
 
 if __name__ == "__main__":
     # Start Flask's built-in development server
     # The app will be accessible at http://127.0.0.1:5000/
     app.run()
+
+    
